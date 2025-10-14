@@ -21,15 +21,22 @@
     text-align: right;
 }
 
+.sidebar-items{
+    text-align: center;
+}
+
 .sidebar-item {
     background: #fff;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px;
+    padding: 10px;
     margin-bottom: 15px;
     border-radius: 10px;
     cursor: pointer;
+}
+.sidebar-item> span{
+    padding: 5 px;
 }
 
 .main-content {
@@ -48,12 +55,21 @@
 
 .header-input{
     background: #fff;
+    border: none;
     padding: 20px;
     border-radius: 20px;
     text-align: center;
     width: 380px;
     height: 40px;
     margin-bottom: 60px;
+}
+
+.header-input:focus {
+    outline: none; 
+}
+
+.main-section{
+    display: none;
 }
 
 .weather-card{
@@ -130,6 +146,11 @@
     margin-bottom: 7px;
 }
 
+#date{
+    color: #bbbaba;
+    font-weight: 700;
+}
+
 #temp{
     font-weight: 600;
     font-size: 36px;
@@ -147,4 +168,19 @@
     color: #fff;
     font-size: 25px;
     margin-bottom: 40px ;
+}
+
+#tip{
+    color: #fff;
+    margin-top: 50px;
+}
+
+#clean{
+    margin-top: 15px;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 40px 10px 40px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background: #340163;
 }

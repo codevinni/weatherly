@@ -25,15 +25,8 @@
 
             <aside id="sidebar" class="sidebar">
                 <i id="history" class="fa-solid fa-clock-rotate-left"></i>
-                <div class="sidebar-items">
-                    <div class="sidebar-item">
-                        <span> Name </span>
-                        <i>Icon</i>
-                    </div>
-                    <div class="sidebar-item">
-                        <span> Name </span>
-                        <i>Icon</i>
-                    </div>
+                <div id="sidebar-items" class="sidebar-items">
+                    <span id="clean">Empty history</span>
                 </div>
             </aside>
 
@@ -43,8 +36,10 @@
                     <input id="input" type="text" class="header-input" placeholder="City name">
                     <!-- <h1 class="title"> WEATHER </h1> -->
                 </header>
-
-                <section class="main-section">
+                
+                <h1 id="tip"> Enter a city to explore real-time weather and temperatures worldwide </h1>
+            
+                <section id="main-section" class="main-section">
                     <div class="weather-card">
 
                         <div id="city"></div>

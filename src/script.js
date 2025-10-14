@@ -1,7 +1,12 @@
 const input = document.getElementById("input")
+let oldSearchs = []
 
 function getKey(){
     return ""
+}
+
+function toCelsius(kelvin) {
+    return (kelvin - 273.15).toFixed(1);
 }
 
 async function requestWeather(city){
@@ -23,8 +28,34 @@ async function requestWeather(city){
     }
 }
 
-function toCelsius(kelvin) {
-    return (kelvin - 273.15).toFixed(1);
+function addToHistory(data) {
+
+    const index = oldSearchs.findIndex(e => e.name === data.name);
+
+    if (index !== -1)
+        oldSearchs.splice(index, 1);
+
+    oldSearchs.push(data);
+
+    if (oldSearchs.length > 10)
+        oldSearchs.shift();
+}
+
+
+
+function loadHistory() {
+
+    const sidebarItems = document.getElementById("sidebar-items");
+    sidebarItems.innerHTML = "";  
+
+    for (const e of [...oldSearchs].reverse()) {
+        sidebarItems.innerHTML += `
+            <div class="sidebar-item">
+                <span>${e.name}</span>
+                <img src="https://openweathermap.org/img/wn/${e.weather[0].icon}@2x.png" width="40" height="40" alt="${e.weather[0].description}">
+            </div>
+        `;
+    }
 }
 
 function loadCards(data){
@@ -33,6 +64,13 @@ function loadCards(data){
         console.error("Dados inválidos recebidos:", data);
         return;
     }
+
+    input.value = "";
+    document.getElementById("tip").style.display = "none"
+    document.getElementById("main-section").style.display = "block"
+
+    addToHistory(data);
+    loadHistory();
 
     const city = document.getElementById('city'),
           date = document.getElementById('date'),
