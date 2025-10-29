@@ -9,24 +9,7 @@ function toCelsius(kelvin) {
     return (kelvin - 273.15).toFixed(1);
 }
 
-async function requestWeather(city){
 
-    const key = getKey()
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
-        
-    try {
-        var res = await fetch(url)
-
-        if(!res.ok)
-            throw new Error(`Erro HTTP: ${resposta.status}`);
-        console.log(res)
-        return res.json()
-
-    } catch (error) {
-        console.error('Erro ao buscar cidade:', error.message);
-        return null
-    }
-}
 
 function addToHistory(data) {
 
@@ -41,20 +24,26 @@ function addToHistory(data) {
         oldSearchs.shift();
 }
 
-
-
 function loadHistory() {
 
     const sidebarItems = document.getElementById("sidebar-items");
     sidebarItems.innerHTML = "";  
 
     for (const e of [...oldSearchs].reverse()) {
-        sidebarItems.innerHTML += `
-            <div class="sidebar-item">
-                <span>${e.name}</span>
-                <img src="https://openweathermap.org/img/wn/${e.weather[0].icon}@2x.png" width="40" height="40" alt="${e.weather[0].description}">
-            </div>
+        
+        const item = document.createElement('div');
+
+        item.classList.add('sidebar-item');
+        item.innerHTML = `
+            <span>${e.name}</span>
+            <img src="https://openweathermap.org/img/wn/${e.weather[0].icon}@2x.png" width="40" height="40" alt="${e.weather[0].description}">
         `;
+
+        item.addEventListener('click', () => {
+            weather(e.name);
+        });
+
+        sidebarItems.appendChild(item);
     }
 }
 
@@ -131,11 +120,35 @@ function loadCards(data){
     sidebar.style.background = sidebarColor;
 }
 
+async function requestWeather(city){
+
+    const key = getKey()
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
+        
+    try {
+        var res = await fetch(url)
+
+        if(!res.ok)
+            throw new Error(`Erro HTTP: ${resposta.status}`);
+        console.log(res)
+        return res.json()
+
+    } catch (error) {
+        console.error('Erro ao buscar cidade:', error.message);
+        return null
+    }
+}
+
+async function weather(city){
+
+    data = await requestWeather(city);
+    loadCards(data);
+}
+
 input.onkeydown = async (e) => {
 
     if(e.key === "Enter"){
-        data = await requestWeather(input.value);
-        loadCards(data);
+        weather(input.value);
     }
 
 }
