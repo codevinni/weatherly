@@ -1,9 +1,7 @@
 const input = document.getElementById("input")
+
 let oldSearchs = []
 
-function getKey(){
-    return ""
-}
 
 function toCelsius(kelvin) {
     return (kelvin - 273.15).toFixed(1);
@@ -133,16 +131,16 @@ function animateMainCards() {
 
 async function requestWeather(city){
 
-    const key = getKey()
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
+    const url = `/api/weather?city=${encodeURIComponent(cityName)}`;
         
     try {
         var res = await fetch(url)
+        const data = await res.json();
 
         if(!res.ok)
             throw new Error(`Erro HTTP: ${resposta.status}`);
-        console.log(res)
-        return res.json()
+
+        return data;
 
     } catch (error) {
         console.error('Erro ao buscar cidade:', error.message);
