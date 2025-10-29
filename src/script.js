@@ -131,7 +131,7 @@ function animateMainCards() {
 
 async function requestWeather(city){
 
-    const url = `/api/weather?city=${encodeURIComponent(cityName)}`;
+    const url = `/api/weather?city=${encodeURIComponent(city)}`;
         
     try {
         var res = await fetch(url)
