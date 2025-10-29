@@ -9,8 +9,6 @@ function toCelsius(kelvin) {
     return (kelvin - 273.15).toFixed(1);
 }
 
-
-
 function addToHistory(data) {
 
     const index = oldSearchs.findIndex(e => e.name === data.name);
@@ -120,6 +118,19 @@ function loadCards(data){
     sidebar.style.background = sidebarColor;
 }
 
+function animateMainCards() {
+
+    const mainCards = document.querySelectorAll(".weather-card, .bottom-card");
+
+    mainCards.forEach(card => {
+        // Remove e readiciona classes para reiniciar a animação
+        card.classList.remove("animate__animated", "animate__bounceIn");
+        void card.offsetWidth;
+        card.classList.add("animate__animated", "animate__bounceIn");
+        card.style.setProperty("--animate-duration", "0.5s");
+    });
+}
+
 async function requestWeather(city){
 
     const key = getKey()
@@ -142,13 +153,15 @@ async function requestWeather(city){
 async function weather(city){
 
     data = await requestWeather(city);
-    loadCards(data);
+    
+    if(data){
+        animateMainCards();
+        loadCards(data);
+    }
 }
 
 input.onkeydown = async (e) => {
 
-    if(e.key === "Enter"){
+    if(e.key === "Enter")
         weather(input.value);
-    }
-
 }
