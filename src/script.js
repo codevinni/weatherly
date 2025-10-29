@@ -131,20 +131,20 @@ function animateMainCards() {
 
 async function requestWeather(city){
 
-    const url = `/api/weather?city=${encodeURIComponent(cityName)}`;
+    const url = `/api/weather?city=${encodeURIComponent(city)}`;
         
     try {
-        var res = await fetch(url)
+        const res = await fetch(url);
         const data = await res.json();
-
-        if(!res.ok)
-            throw new Error(`Erro HTTP: ${resposta.status}`);
-
+        
+        if(!res.ok) 
+            throw new Error(`Erro HTTP: ${res.status}`);
+        
         return data;
 
     } catch (error) {
-        console.error('Erro ao buscar cidade:', error.message);
-        return null
+        console.error('City searching error:', error.message);
+        return null;
     }
 }
 
